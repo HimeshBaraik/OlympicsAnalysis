@@ -49,14 +49,20 @@ def participating_countries_over_time(df):
     return nations_over_time
 
 def most_successful(df, sport):
-    temp_df = df.dropna(subset = ['Medal'])
+    temp_df = df.dropna(subset=['Medal'])
     
-    if(sport != 'Overall'):
+    if sport != 'Overall':
         temp_df = temp_df[temp_df['Sport'] == sport]
-        
-    x = temp_df['Name'].value_counts().reset_index().merge(df, left_on = 'index', right_on = 'Name', how = 'left')[['index', 'Name_x','Sport', 'region' ]].drop_duplicates('index')
-    x.rename(columns = {'index': 'Name', 'Name_x': 'Medals'}, inplace = True)
-    return x
+    
+    # Reset index and give it a proper column name
+    successful_athletes = temp_df['Name'].value_counts().reset_index()
+    successful_athletes.columns = ['Name', 'Medals']
+    
+    # Merging with df to get additional information
+    merged_df = successful_athletes.merge(df, left_on='Name', right_on='Name', how='left')[['Name', 'Medals', 'Sport', 'region']].drop_duplicates('Name')
+    
+    return merged_df
+
 
 def weight_v_height(df,sport):
     athlete_df = df.drop_duplicates(subset=['Name', 'region'])
