@@ -86,9 +86,9 @@ if user_menu == 'Overall Analysis':
 
     ############################################################
 
-    nations_over_time = helper.participating_countries_over_time(df)
-    fig = px.line(nations_over_time, x = 'Year', y = 'Number of countries')
-    st.title("Participating Nations Over the Years")
+    nations_over_time = helper.data_over_time(df,'region')
+    fig = px.line(nations_over_time, x="Edition", y="region")
+    st.title("Participating Nations over the years")
     st.plotly_chart(fig)
 
     st.write("")
