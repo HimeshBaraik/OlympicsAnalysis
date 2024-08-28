@@ -1,6 +1,6 @@
+scipy
 streamlit
 pandas
 matplotlib
 seaborn
 plotly
-scipy
